@@ -8,14 +8,9 @@
 import os
 
 from PIL import Image, ImageOps
-import re
 from io import StringIO
 import numpy as np
-from matplotlib.figure import Figure
 import matplotlib.pyplot as plt
-import csv
-from matplotlib.ticker import StrMethodFormatter
-import seaborn as sns
 
 
 pathfigure = os.getcwd() + '/Plot_results/'
@@ -48,28 +43,6 @@ def parse_data(filename):
     data = np.loadtxt(s, delimiter=',', dtype=np.int32)
 
     return first_column, data
-
-def convert_dec_to_bin(berr):
-    all_data = []
-    for row in range(0, len(berr)):
-        temp_all_data = []
-        for col in range(0, len(berr[0])):
-            temp_all_data.append(np.binary_repr(berr[row][col], width=8))
-        all_data.append(''.join(temp_all_data))
-
-    new_list = []
-    for row in range(0, len(all_data)):
-        new_list.append(','.join(all_data[row]))
-
-    all_data = np.loadtxt(new_list, delimiter=',', dtype=np.int32)
-
-    return all_data
-
-
-def extract_file(file):
-    set_feature, ber = parse_data(file)
-    all_bit = convert_dec_to_bin(ber)
-    return all_bit
 
 def read_image(filename):
     lines = []
